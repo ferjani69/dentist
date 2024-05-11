@@ -1,6 +1,4 @@
-import 'package:search/Patients%20class/patient.dart';
-import 'package:search/treatement.dart';
-import 'package:intl/intl.dart';
+import 'package:search/models/treatement.dart';
 final List<Treatement> treatment_list = [
   Treatement("fgfggfggfgf", DateTime(2003, 2, 1), "23", "took of his teeth 323","notes" ,50, 40,'fdhfhd'),
   Treatement("fgfggfggf", DateTime(2000, 8, 1), "23", "detartage","notes", 50, 40,'fdhfhd'),

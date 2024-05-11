@@ -35,7 +35,8 @@ dependencies:
   firebase_ui_auth: ^1.14.0
   firebase_auth: ^4.19.5
   flutter_secure_storage: ^4.2.1
-
+  syncfusion_flutter_calendar: ^20.3.61
+  google_fonts: ^4.0.4
 
 
 
@@ -80,10 +81,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-    - assets/teeth.svg
-    - assets/hassen.png
-    - assets/waves.svg
-    - assets/wavestop.svg
+    - lib/assets/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

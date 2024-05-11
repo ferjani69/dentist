@@ -1,11 +1,12 @@
-import 'dart:io';
-
+import 'dart:io' show File;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
 String? text;
 class OCROptionsPage extends StatefulWidget {
+  const OCROptionsPage({super.key});
+
   @override
   State<OCROptionsPage> createState() => _OCROptionsPageState();
 }

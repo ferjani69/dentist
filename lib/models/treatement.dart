@@ -1,7 +1,4 @@
-import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart' ;
-import 'package:get/get.dart';
 
 class Treatement {
   String? _id;
@@ -81,7 +78,7 @@ class Treatement {
   }
   Map<String, dynamic> toFirestore() {
     return {
-      'treatDate': datetreat != null ? datetreat!.toIso8601String() : null,
+      'treatDate': datetreat?.toIso8601String(),
       'dent': dent,
       'Natureintrv': natureinterv,
       'Notes': notes,

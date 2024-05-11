@@ -1,13 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:search/Patients%20class/ptientsList.dart';
-import 'package:search/treatement.dart'; // Corrected import statement
-import 'package:search/treatement_chart.dart';
-import 'package:search/Patients%20class/patient.dart';
-import 'package:search/treatmentlist.dart';
-import 'Edittreatement.dart';
+import 'package:intl/intl.dart' show DateFormat;
+import 'package:search/models/treatement.dart'; // Corrected import statement
+import 'package:search/models/treatmentlist.dart';
+import '../database/Edittreatement.dart';
 // Import the AppDrawer widget
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../models/patient.dart';
 
 // Adjust import as necessary
 
@@ -22,7 +22,7 @@ class TreatmentRecordsPage extends StatefulWidget {
   final Function(Treatement) addtreat; // Accepting the addtreat function
 
 
-  const TreatmentRecordsPage({Key? key, required this.patient, required this.addtreat,}) : super(key: key);
+  const TreatmentRecordsPage({super.key, required this.patient, required this.addtreat,});
 
   @override
   State<TreatmentRecordsPage> createState() => _TreatmentRecordsPageState();
@@ -88,15 +88,6 @@ class _TreatmentRecordsPageState extends State<TreatmentRecordsPage> {
           prefixIconColor: Colors.white,
           suffixIcon: IconButton(
             onPressed: () async {
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TreatmentChart(
-                    patient: widget.patient,
-                    addtreat: (newTreatment) => setState(() {}),
-                  ),
-                ),
-              );
             },
             icon: const Icon(Icons.add_box_rounded),
             color: Colors.white,
@@ -134,7 +125,9 @@ class _TreatmentRecordsPageState extends State<TreatmentRecordsPage> {
               try {
                 return Treatement.fromFirestore(data, doc.id); // Ensure this conversion is correct
               } catch (e) {
-                print("Error parsing data: $e");
+                if (kDebugMode) {
+                  print("Error parsing data: $e");
+                }
                 return null;
               }
             }).where((t) => t != null).cast<Treatement>().toList();
@@ -218,10 +211,14 @@ class _TreatmentRecordsPageState extends State<TreatmentRecordsPage> {
                                       .doc(treatment.id)
                                       .delete()
                                       .then((_) {
-                                    print("Treatment successfully deleted from Firestore!");
+                                    if (kDebugMode) {
+                                      print("Treatment successfully deleted from Firestore!");
+                                    }
                                   })
                                       .catchError((error) {
-                                    print("Error removing document: $error");
+                                    if (kDebugMode) {
+                                      print("Error removing document: $error");
+                                    }
                                   });
                                 }
                                 Navigator.of(context).pop();

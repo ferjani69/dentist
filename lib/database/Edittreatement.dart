@@ -1,13 +1,10 @@
-
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
-import 'package:search/treatement.dart';
-import 'treatmentlist.dart';
-import 'package:intl/intl.dart';
+import 'package:search/models/treatement.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart' ;
-import 'package:get/get.dart';
-import 'package:search/Patients%20class/patient.dart';
 
+import '../models/patient.dart';
 
 class edittreatment extends StatefulWidget {
   final Treatement treatement1;
@@ -36,7 +33,9 @@ class _edittreatmentState extends State<edittreatment> {
   void updateTreatmentInFirestore() {
     if (widget.treatement1.id == null) {
       // Handle error: treatement ID should not be null
-      print("Error: No Treatement ID available for updating.");
+      if (kDebugMode) {
+        print("Error: No Treatement ID available for updating.");
+      }
       return;
     }
 
@@ -51,11 +50,15 @@ class _edittreatmentState extends State<edittreatment> {
       'doit': widget.treatement1.doit,
       'recu': widget.treatement1.recu,
     }).then((_) {
-      print("Patient updated successfully in Firestore.");
+      if (kDebugMode) {
+        print("Patient updated successfully in Firestore.");
+      }
       widget.onUpdate(widget.treatement1);  // Update the local data
       Navigator.pop(context);  // Optionally pop back
     }).catchError((error) {
-      print("Error updating patient: $error");
+      if (kDebugMode) {
+        print("Error updating patient: $error");
+      }
       // Optionally show an error message to the user
     });
   }

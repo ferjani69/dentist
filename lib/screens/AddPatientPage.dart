@@ -1,22 +1,21 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:search/OCR0ptionsPage.dart';
+import 'package:search/screens/OCR0ptionsPage.dart';
 import 'package:search/main.dart';
-import 'package:search/Patients%20class/patient.dart';
-import 'package:intl/intl.dart';
-import 'package:search/Patients%20class/ptientsList.dart';
-import 'Widgets/Drawerwidget.dart'; // Import the AppDrawer widget
-import 'Widgets/Voicett.dart';
+import 'package:intl/intl.dart' show DateFormat;
+import '../Widgets/Drawerwidget.dart'; // Import the AppDrawer widget
+import '../Widgets/Voicett.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart' ;
+
+import '../models/patient.dart';
+import '../models/ptientsList.dart';
 
 
 class AddPatientPage extends StatefulWidget {
 
   final Function(Patient) patientadd; // Define the callback function
 
-  AddPatientPage({required this.patientadd});
+  const AddPatientPage({super.key, required this.patientadd});
 
   @override
   State<AddPatientPage> createState() => _AddPatientPageState();
@@ -68,9 +67,11 @@ class _AddPatientPageState extends State<AddPatientPage> {
       try {
         birthdate = DateFormat('yyyy-MM-dd').parse(birthDateString);
       } catch (e) {
-        print('Error parsing birth date: $e');
+        if (kDebugMode) {
+          print('Error parsing birth date: $e');
+        }
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Invalid date format. Please use YYYY-MM-DD.'),
             backgroundColor: Colors.red,
           ),
@@ -119,11 +120,15 @@ class _AddPatientPageState extends State<AddPatientPage> {
         'profession': profession,
         'reference': reference,
       }).then((docRef) {
-        print("Document written with ID: ${docRef.id}");
+        if (kDebugMode) {
+          print("Document written with ID: ${docRef.id}");
+        }
         // Update the ID of newPatient if necessary
         newPatient.id = docRef.id;
       }).catchError((error) {
-        print("Error adding document: $error");
+        if (kDebugMode) {
+          print("Error adding document: $error");
+        }
       });
       Navigator.push(
         context,
@@ -178,7 +183,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => OCROptionsPage()),
+                MaterialPageRoute(builder: (context) => const OCROptionsPage()),
               );
             },
             icon: const Icon(Icons.camera_alt),
