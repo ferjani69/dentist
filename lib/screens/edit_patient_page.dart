@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:search/Patients%20class/patient.dart';
-import 'package:intl/intl.dart';
-import 'Widgets/Drawerwidget.dart'; // Import the AppDrawer widget
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';import 'package:intl/intl.dart' show DateFormat;
+// Import the AppDrawer widget
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart' ;
-import 'package:get/get.dart';
+
+import '../models/patient.dart';
 
 class EditPatientPage extends StatefulWidget {
   final Patient patient;
@@ -21,7 +20,9 @@ class _EditPatientPageState extends State<EditPatientPage> {
   void updatePatientInFirestore() {
     if (widget.patient.id == null) {
       // Handle error: patient ID should not be null
-      print("Error: No patient ID available for updating.");
+      if (kDebugMode) {
+        print("Error: No patient ID available for updating.");
+      }
       return;
     }
 
@@ -34,11 +35,15 @@ class _EditPatientPageState extends State<EditPatientPage> {
       'profession': widget.patient.proff,
       'reference': widget.patient.ref,
     }).then((_) {
-      print("Patient updated successfully in Firestore.");
+      if (kDebugMode) {
+        print("Patient updated successfully in Firestore.");
+      }
       widget.onUpdate(widget.patient);  // Update the local data
       Navigator.pop(context);  // Optionally pop back
     }).catchError((error) {
-      print("Error updating patient: $error");
+      if (kDebugMode) {
+        print("Error updating patient: $error");
+      }
       // Optionally show an error message to the user
     });
   }

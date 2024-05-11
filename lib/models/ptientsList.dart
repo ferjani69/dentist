@@ -1,7 +1,5 @@
-import "package:search/Patients%20class/patient.dart";
 
-
-
+import 'package:search/models/patient.dart';
 
 final List<Patient> patient_list = [
  

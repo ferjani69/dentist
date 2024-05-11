@@ -1,17 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:path_drawing/path_drawing.dart';
-import 'package:search/Patients%20class/patient.dart';
-import 'package:search/treatement_records_page.dart';
 import 'package:search/Widgets/Voicett.dart';
+import '../models/patient.dart';
 import 'OCR0ptionsPage.dart';
-import 'treatement.dart';
+import '../models/treatement.dart';
 import 'package:xml/xml.dart';
-import 'Widgets/Drawerwidget.dart'; // Import the AppDrawer widget
+import '../Widgets/Drawerwidget.dart'; // Import the AppDrawer widget
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart' ;
-import 'package:get/get.dart';
 
 
 String dent='';
@@ -78,7 +76,9 @@ class _TreatmentChartState extends State<TreatmentChart> {
         widget.addtreat(newTreat); // Call the callback function
         Navigator.pop(context, true);
       }).catchError((error) {
-        print("Error adding document: $error");
+        if (kDebugMode) {
+          print("Error adding document: $error");
+        }
         Navigator.pop(context, false); // Indicate an error occurred
       });
 
@@ -106,7 +106,7 @@ class _TreatmentChartState extends State<TreatmentChart> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => OCROptionsPage()),
+                  MaterialPageRoute(builder: (context) => const OCROptionsPage()),
                 );
               },
               icon: const Icon(Icons.camera_alt ),iconSize: 30,
@@ -340,7 +340,7 @@ class _FooState extends State<Foo> {
                   Positioned.fromRect(
                     rect: entry.value.rect,
                     child: Tooltip(
-                      message: '${widget.idToString(entry.key)}', // Pass the tooth name directly here
+                      message: widget.idToString(entry.key), // Pass the tooth name directly here
                       textAlign: TextAlign.center,
                       preferBelow: false,
                       decoration: const BoxDecoration(

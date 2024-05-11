@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:search/AddPatientPage.dart';
+import 'package:search/screens/AddPatientPage.dart';
 import 'package:search/Widgets/Drawerwidget.dart';
-import 'package:search/Patients%20class/patient.dart';
-import 'package:search/edit_patient_page.dart';
-import 'package:search/ViewPatientPage.dart';
+import 'package:search/screens/edit_patient_page.dart';
+import 'package:search/screens/ViewPatientPage.dart';
 // Import the AppDrawer widget
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart' ;
-import 'package:search/Login.dart';
+import 'package:search/screens/splash_screen.dart';
+
+import 'models/patient.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -22,8 +23,8 @@ class MyApp extends StatelessWidget {
   @override
 
   Widget build(BuildContext context) {
-    return  MaterialApp(
-      home: LoginPage(),    );
+    return  const MaterialApp(
+      home: SplashScreen(),    );
   }
 }
 
@@ -43,6 +44,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   void initState() {
+    super.initState();
 
     fetchPatients();  // Fetch data when the widget initializes
   }
@@ -132,7 +134,7 @@ class _SearchPageState extends State<SearchPage> {
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: const Color(0xff91C8E4),
-                      hintText:  "eg Youssef Ferjani",
+                      hintText: "Chercher un Patient...",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide.none,
